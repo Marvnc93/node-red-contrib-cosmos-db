@@ -1,0 +1,24 @@
+{
+  "name": "red-contrib-cosmos-db",
+  "version": "1.0.0",
+  "description": "COnnect to Cosmos DB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marvnc93/node-red-contrib-cosmos-db.git"
+  },
+  "keywords": [
+    "node-red",
+    "cosmos-db",
+    "azure"
+  ],
+  "author": "Marvin Czarski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Marvnc93/node-red-contrib-cosmos-db/issues"
+  },
+  "homepage": "https://github.com/Marvnc93/node-red-contrib-cosmos-db#readme"
+}

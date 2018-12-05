@@ -20,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/Marvnc93/node-red-contrib-cosmos-db/issues"
   },
-  "homepage": "https://github.com/Marvnc93/node-red-contrib-cosmos-db#readme"
+  "homepage": "https://github.com/Marvnc93/node-red-contrib-cosmos-db#readme",
+  "node-red": {
+    "nodes":{
+      "cosmos":"index.js"
+    }
+  },
+  "dependencies": {
+    
+  }
 }

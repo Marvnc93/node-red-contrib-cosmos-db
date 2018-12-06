@@ -22,11 +22,12 @@
   },
   "homepage": "https://github.com/Marvnc93/node-red-contrib-cosmos-db#readme",
   "node-red": {
-    "nodes":{
-      "cosmos":"index.js"
+    "nodes": {
+      "cosmos": "index.js"
     }
   },
   "dependencies": {
-    
+    "@azure/cosmos": "^2.0.0-3",
+    "url": "^0.11.0"
   }
 }

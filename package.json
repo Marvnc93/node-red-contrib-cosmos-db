@@ -1,5 +1,5 @@
 {
-  "name": "red-contrib-cosmos-db",
+  "name": "node-red-contrib-cosmos-db",
   "version": "1.0.0",
   "description": "COnnect to Cosmos DB",
   "main": "index.js",

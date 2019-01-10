@@ -1,3 +1,134 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Query',{
+        category: 'CosmosDB',
+        color:"#008AD7",
+        defaults: {
+            azrcon: {type:"Connection"},
+            name: {value:"Query"},
+            query: {value:""},
+            outField: {value:"payload"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "db.png",
+        label: function() {
+            return this.name||"";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        },
+        oneditprepare: function() {
+            var that = this;
+            this.editor = RED.editor.createEditor({
+                id: 'node-input-query-editor',
+                mode: 'ace/mode/sql',
+                value: $("#node-input-query").val()
+            });
+            this.editor.focus();
+        },
+        oneditsave: function() {
+            $("#node-input-query").val(this.editor.getValue());
+            delete this.editor;
+        },
+        oneditresize: function(size) {
+            var rows = $("#dialog-form>div:not(.node-text-editor-row)");
+            var height = $("#dialog-form").height();
+            for (var i=0;i<rows.size();i++) {
+                height -= $(rows[i]).outerHeight(true);
+            }
+            var editorRow = $("#dialog-form>div.node-text-editor-row");
+            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+            $(".node-text-editor").css("height",height+"px");
+            this.editor.resize();
+        }
+    });
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('Push',{
+        category: 'CosmosDB',
+        color:"#008AD7",
+        defaults: {
+            azrcon: {type:"Connection"},
+            name: {value:"Push"},
+            outField: {value:"payload"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "db.png",
+        label: function() {
+            return this.name||"";
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-help-name="Query">
+    <p>Node for Node-RED to MS SQL</p>
+    <h4>Query</h4>
+    <p>You can uses the <i><a href="http://mustache.github.io/mustache.5.html" target="_new">mustache</a></i> format.</br>
+    Example: <i>SELECT * FROM Test WHERE Name = {{{payload.name}}}</i></p>
+    If no query is specified, the msg.payload value is used as the query.
+</script>
+<script type="text/x-red" data-template-name="Query">
+    <div class="form-row">
+        <label for="node-input-azrcon"><i class="icon-tag"></i> Connection</label>
+        <input type="text" id="node-input-azrcon">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row" style="margin-bottom: 0px;">
+        <label for="node-input-query" style="width: 100% !important;"><i class="fa fa-comments"></i> Query</label>
+        <input type="hidden" id="node-input-query" autofocus="autofocus">
+    </div>
+    <div class="form-row node-text-editor-row">
+        <div style="height: 250px;" class="node-text-editor" id="node-input-query-editor" ></div>
+    </div>
+</script>
+
+
+<script type="text/x-red" data-help-name="Push">
+    <p>Node for Node-RED to MS SQL</p>
+    <h4>Query</h4>
+    <p>You can uses the <i><a href="http://mustache.github.io/mustache.5.html" target="_new">mustache</a></i> format.</br>
+    Example: <i>SELECT * FROM Test WHERE Name = {{{payload.name}}}</i></p>
+    If no query is specified, the msg.payload value is used as the query.
+</script>
+<script type="text/x-red" data-template-name="Push">
+    <div class="form-row">
+        <label for="node-input-azrcon"><i class="icon-tag"></i> Connection</label>
+        <input type="text" id="node-input-azrcon">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+
+<!-- Everything for the credentials template -->
+<script type="text/javascript">
+    RED.nodes.registerType('Connection',{
+        category: 'config',
+        defaults: {
+            name: {value:""},
+            database: {value:""},
+            collection: {value:""}
+        },
+        inputs:0,
+        outputs:0,
+        credentials: {
+            endpoint: {type:"text"},
+            key: {type:"password"},
+        },
+        label: function() {
+            return this.name || "Azure Connection";
+        }
+    });
+</script>
 <script type="text/x-red" data-template-name="Connection">
     <div class="form-row">
         <label for="node-config-input-name"><i class="icon-bookmark"></i> Name</label>
@@ -21,81 +152,7 @@
     </div>
 </script>
 
-<script type="text/javascript">
-    RED.nodes.registerType('Connection',{
-        category: 'config',
-        defaults: {
-            name: {value:""},
-            database: {value:""},
-            collection: {value:""}
-        },
-        inputs:0,
-        outputs:0,
-        credentials: {
-            endpoint: {type:"text"},
-            key: {type:"password"},
-        },
-        label: function() {
-            return this.name || "Azure Connection";
-        }
-    });
-</script>
-<script type="text/x-red" data-help-name="Cosmos">
-    <p>Node for Node-RED to MS SQL</p>
-    <h4>Query</h4>
-    <p>You can uses the <i><a href="http://mustache.github.io/mustache.5.html" target="_new">mustache</a></i> format.</br>
-    Example: <i>SELECT * FROM Test WHERE Name = {{{payload.name}}}</i></p>
-    If no query is specified, the msg.payload value is used as the query.
-</script>
-<script type="text/x-red" data-template-name="Cosmos">
-    <div class="form-row">
-        <label for="node-input-azrcon"><i class="icon-tag"></i> Connection</label>
-        <input type="text" id="node-input-azrcon">
-    </div>
-    <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-</script>
 
 
-<script type="text/javascript">
-    RED.nodes.registerType('Cosmos-DB-Query',{
-        category: 'CosmosDB',
-        color:"#c0d3ed ",
-        defaults: {
-            azrcon: {type:"Connection"},
-            name: {value:"Query"},
-            outField: {value:"payload"}
-        },
-        inputs:1,
-        outputs:1,
-        icon: "db.png",
-        label: function() {
-            return this.name||"";
-        },
-        labelStyle: function() {
-            return this.name?"node_label_italic":"";
-        }
-    });
-</script>
-<!-- <script type="text/javascript">
-    RED.nodes.registerType('Cosmos-DB-Add-Entry',{
-        category: 'CosmosDB',
-        color:"#c0d3ed ",
-        defaults: {
-            azrcon: {type:"Connection"},
-            name: {value:"Add Entry"},
-            outField: {value:"payload"}
-        },
-        inputs:1,
-        outputs:1,
-        icon: "db.png",
-        label: function() {
-            return this.name||"";
-        },
-        labelStyle: function() {
-            return this.name?"node_label_italic":"";
-        }
-    });
-</script> -->
+
+
